@@ -99,3 +99,4 @@ function showConfirmation(orderId) {
     </div>
   `;
 }
+
