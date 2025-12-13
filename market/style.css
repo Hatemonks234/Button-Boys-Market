@@ -1,1 +1,71 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eaf6ff;
+  color: #033;
+}
 
+header {
+  background: #9ad7ff;
+  padding: 20px;
+  text-align: center;
+}
+
+.products {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 260px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+}
+
+button {
+  background: #4bb3ff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#orderBox {
+  max-width: 300px;
+  margin: 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.pay a {
+  display: block;
+  background: #dff2ff;
+  margin: 6px 0;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #033;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  margin: 30px;
+}
