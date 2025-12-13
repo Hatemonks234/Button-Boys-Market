@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TB3 Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
+<header>
+  <h1>TB3 Market</h1>
+  <p>Fast • Safe • Automated</p>
+</header>
+
+<section class="products">
+  <div class="card">
+    <h2>Game Account</h2>
+    <p>Instant delivery after payment</p>
+    <button onclick="openOrder()">Buy Now</button>
+  </div>
+</section>
+
+<section id="orderBox" class="hidden">
+  <h2>Create Order</h2>
+
+  <label>Discord ID</label>
+  <input id="discord" placeholder="123456789012345678">
+
+  <label>Order ID (make one)</label>
+  <input id="orderId" placeholder="TB3-1234">
+
+  <div class="pay">
+    <a href="https://cash.app/$lozanoyol" target="_blank">Pay with Cash App</a>
+    <a href="https://venmo.com/u/juanflores23" target="_blank">Pay with Venmo</a>
+  </div>
+
+  <button onclick="submitOrder()">I Paid</button>
+</section>
+
+<footer>
+  <a href="admin.html">Admin Panel</a>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
