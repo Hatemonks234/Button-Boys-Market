@@ -30,12 +30,61 @@ function submitOrder() {
     })
   })
   .then(() => {
-    alert("Order sent! Pay, then send proof on Discord.");
-    document.getElementById("discord").value = "";
-    document.getElementById("notes").value = "";
+    showConfirmation(orderId);
   })
   .catch(() => {
     alert("Error sending order. Try again.");
   });
 }
 
+function showConfirmation(orderId) {
+  document.body.innerHTML = `
+    <div style="
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#eef7ff;
+      font-family:Arial;
+    ">
+      <div style="
+        background:white;
+        padding:30px;
+        border-radius:12px;
+        max-width:400px;
+        text-align:center;
+      ">
+        <h2>✅ Order Submitted</h2>
+        <p><strong>Your Order ID:</strong></p>
+        <p style="font-size:18px">${orderId}</p>
+
+        <button onclick="copyOrderId('${orderId}')" style="
+          margin-top:10px;
+          padding:10px;
+          width:100%;
+          background:#4faaff;
+          color:white;
+          border:none;
+          border-radius:8px;
+          cursor:pointer;
+        ">
+          Copy Order ID
+        </button>
+
+        <p style="margin-top:15px;font-size:14px;">
+          Pay using Cash App or Venmo<br>
+          Then send proof + Order ID on Discord
+        </p>
+
+        <a href="https://discord.gg/YOURSERVER" target="_blank">
+          Join Discord
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function copyOrderId(id) {
+  navigator.clipboard.writeText(id);
+  alert("Order ID copied!");
+}
