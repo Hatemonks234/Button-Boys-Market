@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>TB3 Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    const PASSWORD = "HiPanda77"; // 🔴 CHANGE THIS
+
+    const userPass = prompt("Enter admin password:");
+    if (userPass !== PASSWORD) {
+      alert("Access denied");
+      window.location.href = "index.html";
+    }
+  </script>
 </head>
 <body>
 
@@ -17,11 +26,8 @@
 <main class="container">
   <h2>Admin Panel</h2>
   <p>This page is private. Do not share.</p>
-
-  <div class="admin-box">
-    <p>Orders will be handled manually for now.</p>
-    <p>Future: Discord bot + auto delivery</p>
-  </div>
+  <p>Orders are handled manually for now.</p>
+  <p>Future: Discord bot + auto delivery</p>
 </main>
 
 <footer>
