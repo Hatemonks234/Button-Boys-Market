@@ -10,22 +10,20 @@
 <header class="navbar">
   <div class="logo">TB3 Admin</div>
   <nav>
-    <a href="index.html">Back to Shop</a>
+    <a href="product.html">Back to Shop</a>
   </nav>
 </header>
 
 <main class="container">
-
   <h2>Stock Control</h2>
-  <button onclick="toggleStock()" id="stockBtn">Set Out of Stock</button>
-  <p id="stockStatus"></p>
 
-  <hr>
+  <button onclick="setStock(true)">Set IN STOCK</button>
+  <button onclick="setStock(false)">Set OUT OF STOCK</button>
+
+  <p id="adminStockStatus"></p>
 
   <h2>Orders</h2>
-
   <div id="orders"></div>
-
 </main>
 
 <script src="script.js"></script>
