@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Stacked TB3 Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,6 +20,7 @@
 <main class="container">
   <div class="product-page">
 
+    <!-- LEFT SIDE -->
     <div class="details">
       <h1>Stacked TB3 Account</h1>
       <ul>
@@ -29,6 +31,7 @@
       </ul>
     </div>
 
+    <!-- RIGHT SIDE -->
     <div class="buy-box">
       <p class="price">$8.00</p>
 
@@ -39,11 +42,11 @@
         placeholder="Discord username or ID (example: user#1234)"
       />
 
-      <!-- ORDER ID INPUT -->
+      <!-- AUTO ORDER ID -->
       <input
         type="text"
         id="order"
-        placeholder="Order ID (example: TB3-1001)"
+        readonly
       />
 
       <a class="pay-btn" href="https://cash.app/$lozanoyol" target="_blank">
@@ -54,7 +57,7 @@
         Pay with Venmo
       </a>
 
-      <button onclick="submitOrder()">Submit Order</button>
+      <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
     </div>
 
   </div>
