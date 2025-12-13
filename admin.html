@@ -11,7 +11,7 @@
   const pass = prompt("Admin password:");
   if (pass !== "HiPanda77") {
     alert("Access denied");
-    window.location.replace("index.html");
+    window.location.href = "index.html";
   }
 </script>
 
@@ -19,20 +19,13 @@
   <div class="logo">TB3 Admin</div>
   <nav>
     <a href="product.html">Back to Shop</a>
-    <a href="https://discord.gg/1342460566958247936" target="_blank">Discord</a>
   </nav>
 </header>
 
 <main class="container">
-
   <h2>Stock Control</h2>
 
-  <input
-    id="stockInput"
-    type="number"
-    min="0"
-    placeholder="Enter stock amount"
-  />
+  <input id="stockInput" type="number" min="0" placeholder="Enter stock amount" />
   <button onclick="updateStock()">Update Stock</button>
 
   <p id="currentStock"></p>
@@ -40,31 +33,16 @@
   <hr />
 
   <h2>Orders</h2>
+  <button onclick="clearOrders()" style="margin-bottom:10px;">Clear Orders</button>
   <ul id="orderList"></ul>
-
 </main>
 
 <script src="script.js"></script>
-
 <script>
   function updateStock() {
     const val = parseInt(document.getElementById("stockInput").value);
-    if (isNaN(val) || val < 0) {
-      alert("Invalid stock amount");
-      return;
-    }
+    if (isNaN(val) || val < 0) return alert("Invalid stock");
     setStock(val);
-    loadAdmin();
-  }
-
-  function endOrder(index) {
-    let orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
-    orders.splice(index, 1);
-    localStorage.setItem("tb3_orders", JSON.stringify(orders));
-
-    let stock = getStock();
-    if (stock > 0) setStock(stock - 1);
-
     loadAdmin();
   }
 
@@ -76,21 +54,18 @@
     const list = document.getElementById("orderList");
     list.innerHTML = "";
 
-    if (orders.length === 0) {
-      list.innerHTML = "<li>No orders yet</li>";
-      return;
-    }
-
-    orders.forEach((o, i) => {
+    orders.forEach(o => {
       const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${o.id}</strong><br>
-        Discord: ${o.discord}<br>
-        Time: ${o.time}<br>
-        <button onclick="endOrder(${i})">End Order</button>
-      `;
+      li.textContent = `${o.id} — ${o.discord} (${o.time})`;
       list.appendChild(li);
     });
+  }
+
+  function clearOrders() {
+    if (confirm("Clear all orders?")) {
+      localStorage.removeItem("tb3_orders");
+      loadAdmin();
+    }
   }
 
   loadAdmin();
