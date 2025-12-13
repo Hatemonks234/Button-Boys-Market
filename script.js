@@ -1,9 +1,9 @@
 function submitOrder() {
-  const discord = document.getElementById("discord").value.trim();
-  const order = document.getElementById("order").value.trim();
+  const discord = document.getElementById("discord")?.value.trim();
+  const order = document.getElementById("order")?.value.trim();
 
   if (!discord || !order) {
-    alert("Please enter your Discord ID and Order ID.");
+    alert("Please enter your Discord and Order ID");
     return;
   }
 
@@ -12,22 +12,21 @@ function submitOrder() {
     headers: {
       "Content-Type": "application/json"
     },
-   body: JSON.stringify({
-  content:
-    "🧾 **NEW ORDER RECEIVED**\n\n" +
-    "📦 **Product:** Stacked TB3 Account ($8)\n" +
-    "🆔 **Order ID:** " + order + "\n" +
-    "👤 **Discord ID:** " + discord + "\n\n" +
-    "💰 **Status:** Awaiting payment verification"
-})
-    
+    body: JSON.stringify({
+      content:
+        "🧾 **NEW ORDER RECEIVED**\n\n" +
+        "📦 **Product:** Stacked TB3 Account ($8)\n" +
+        "🆔 **Order ID:** " + order + "\n" +
+        "👤 **Discord:** " + discord + "\n\n" +
+        "💰 **Status:** Awaiting payment verification"
+    })
   })
   .then(() => {
-    alert("Order submitted! Please send proof in Discord.");
+    alert("Order submitted! After paying, send proof on Discord.");
     document.getElementById("discord").value = "";
     document.getElementById("order").value = "";
   })
   .catch(() => {
-    alert("Error sending order. Try again.");
+    alert("Error submitting order. Try again.");
   });
 }
