@@ -1,68 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TB3 Admin</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>TB3 Admin Panel</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
 <header class="navbar">
-  <div class="logo">TB3 Admin Panel</div>
+  <div class="logo">TB3 Admin</div>
   <nav>
     <a href="product.html">Back to Shop</a>
-    <a href="https://discord.gg/B4DhgMHaFq" target="_blank">Discord</a>
   </nav>
 </header>
 
-<main class="container" id="adminContent" style="display:none;">
+<main class="container">
+
   <h2>Stock Control</h2>
 
-  <input id="stockInput" type="number" min="0" placeholder="Enter stock amount" />
-  <button id="submitBtn" onclick="updateStock()">Update Stock</button>
+  <input
+    id="stockInput"
+    type="number"
+    min="0"
+    placeholder="Enter stock amount"
+  />
+  <button onclick="updateStock()">Update Stock</button>
 
   <p id="currentStock"></p>
 
-  <hr style="margin:30px 0; border-color:#1a2433;" />
+  <hr />
 
   <h2>Orders</h2>
   <ul id="orderList"></ul>
+
+  <hr />
+
+  <h2>Security</h2>
+  <p>Admin page protected by password.</p>
+
 </main>
 
 <script src="script.js"></script>
 
 <script>
-  // PASSWORD CHECK (after page loads)
+  // PASSWORD PROTECTION (AFTER PAGE LOAD)
   const pass = prompt("Admin password:");
   if (pass !== "HiPanda77") {
     alert("Access denied");
     window.location.href = "index.html";
-  } else {
-    document.getElementById("adminContent").style.display = "block";
-    loadAdmin();
   }
 
   function updateStock() {
     const val = parseInt(document.getElementById("stockInput").value);
-    if (isNaN(val) || val < 0) return alert("Invalid stock amount");
+    if (isNaN(val) || val < 0) {
+      alert("Invalid stock amount");
+      return;
+    }
     setStock(val);
     loadAdmin();
   }
 
-  function loadAdmin() {
-    document.getElementById("currentStock").textContent =
-      "Current stock: " + getStock();
-
-    const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
-    const list = document.getElementById("orderList");
-    list.innerHTML = "";
-
-    orders.forEach(o => {
-      const li = document.createElement("li");
-      li.textContent = `${o.id} — ${o.discord} (${o.time})`;
-      list.appendChild(li);
-    });
-  }
+  loadAdmin();
 </script>
 
 </body>
