@@ -12,14 +12,13 @@
   <nav>
     <a href="index.html">Products</a>
     <a href="#">FAQ</a>
-    <a href="https://discord.gg/1342460566958247936" target="_blank">Discord</a>
+    <a href="https://discord.gg/B4DhgMHaFq" target="_blank">Discord</a>
   </nav>
 </header>
 
 <main class="container">
   <div class="product-page">
 
-    <!-- PRODUCT DETAILS -->
     <div class="details">
       <h1>Stacked TB3 Account</h1>
       <ul>
@@ -35,55 +34,28 @@
       <p id="stockStatus"></p>
     </div>
 
-    <!-- BUY BOX -->
     <div class="buy-box">
       <p class="price">$8.00</p>
 
-      <input
-        id="discord"
-        type="text"
-        placeholder="Discord username or ID"
-      />
+      <input id="discord" type="text" placeholder="Discord username or ID" />
+      <input id="order" type="text" readonly />
 
-      <input
-        id="order"
-        type="text"
-        readonly
-      />
+      <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
 
-      <button id="submitBtn" onclick="submitOrder()">
-        Submit Order
-      </button>
+      <div id="confirmation" style="display:none; margin-top:15px;">
+        <p style="color:#4caf50; font-weight:600;">
+          ✅ Order received! Join Discord for delivery.
+        </p>
+        <p id="orderIdText" style="color:#9fd3ff;"></p>
+        <a href="https://discord.gg/B4DhgMHaFq" target="_blank" class="discord-btn">
+          Join Discord
+        </a>
+      </div>
     </div>
 
   </div>
 </main>
 
 <script src="script.js"></script>
-
-<script>
-  function updateStockUI() {
-    const stock = getStock();
-    const status = document.getElementById("stockStatus");
-    const btn = document.getElementById("submitBtn");
-
-    if (stock <= 0) {
-      status.textContent = "❌ OUT OF STOCK";
-      status.style.color = "red";
-      btn.disabled = true;
-      btn.style.opacity = "0.5";
-      btn.style.cursor = "not-allowed";
-    } else {
-      status.textContent = "✅ In Stock: " + stock;
-      status.style.color = "green";
-      btn.disabled = false;
-      btn.style.opacity = "1";
-      btn.style.cursor = "pointer";
-    }
-  }
-
-  updateStockUI();
-</script>
-
 </body>
 </html>
