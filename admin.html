@@ -1,66 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>TB3 Admin Panel</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>TB3 Admin</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
+<script>
+  const pass = prompt("Admin password:");
+  if (pass !== "HiPanda77") {
+    alert("Access denied");
+    window.location.href = "index.html";
+  }
+</script>
+
 <header class="navbar">
-  <div class="logo">TB3 Admin</div>
+  <div class="logo">TB3 Admin Panel</div>
   <nav>
     <a href="product.html">Back to Shop</a>
   </nav>
 </header>
 
 <main class="container">
-
   <h2>Stock Control</h2>
 
-  <input
-    id="stockInput"
-    type="number"
-    min="0"
-    placeholder="Enter stock amount"
-  />
-  <button onclick="updateStock()">Update Stock</button>
+  <input id="stockInput" type="number" min="0" placeholder="Set stock amount">
+  <button onclick="setStock(parseInt(stockInput.value))">Update Stock</button>
 
   <p id="currentStock"></p>
 
-  <hr />
+  <hr>
 
   <h2>Orders</h2>
-  <ul id="orderList"></ul>
-
-  <hr />
-
-  <h2>Security</h2>
-  <p>Admin page protected by password.</p>
-
+  <ul id="orderList" class="order-list"></ul>
 </main>
 
 <script src="script.js"></script>
-
 <script>
-  // PASSWORD PROTECTION (AFTER PAGE LOAD)
-  const pass = prompt("Admin password:");
-  if (pass !== "HiPanda77") {
-    alert("Access denied");
-    window.location.href = "index.html";
-  }
-
-  function updateStock() {
-    const val = parseInt(document.getElementById("stockInput").value);
-    if (isNaN(val) || val < 0) {
-      alert("Invalid stock amount");
-      return;
-    }
-    setStock(val);
-    loadAdmin();
-  }
-
   loadAdmin();
 </script>
 
