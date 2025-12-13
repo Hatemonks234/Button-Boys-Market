@@ -1,5 +1,3 @@
-/* ========= STOCK ========= */
-
 function getStock() {
   return parseInt(localStorage.getItem("tb3_stock")) || 0;
 }
@@ -8,63 +6,49 @@ function setStock(val) {
   localStorage.setItem("tb3_stock", val);
 }
 
-/* ========= ORDER ID ========= */
+function updateProductStock() {
+  const stock = getStock();
+  const status = document.getElementById("stockStatus");
+  const btn = document.getElementById("submitBtn");
 
-function generateOrderId() {
-  return "TB3-" + Math.floor(100000 + Math.random() * 900000);
+  if (!status || !btn) return;
+
+  if (stock > 0) {
+    status.innerHTML = "✅ In Stock: " + stock;
+    status.style.color = "#4caf50";
+    btn.disabled = false;
+  } else {
+    status.innerHTML = "❌ Out of Stock";
+    status.style.color = "#f44336";
+    btn.disabled = true;
+  }
 }
 
-/* ========= SUBMIT ORDER ========= */
-
 function submitOrder() {
-  const stock = getStock();
-  if (stock <= 0) {
-    alert("Out of stock");
-    return;
-  }
+  const discord = document.getElementById("discord").value.trim();
+  if (!discord) return alert("Enter Discord username or ID");
 
-  const discordInput = document.getElementById("discord");
-  if (!discordInput || discordInput.value.trim() === "") {
-    alert("Enter your Discord username or ID");
-    return;
-  }
+  let stock = getStock();
+  if (stock <= 0) return alert("Out of stock");
 
-  const orderId = generateOrderId();
-
-  // show ID in box
-  const orderBox = document.getElementById("order");
-  if (orderBox) orderBox.value = orderId;
+  const orderId = "TB3-" + Math.floor(10000 + Math.random() * 90000);
 
   const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
-
   orders.push({
     id: orderId,
-    discord: discordInput.value.trim(),
+    discord,
     time: new Date().toLocaleString()
   });
 
   localStorage.setItem("tb3_orders", JSON.stringify(orders));
-
   setStock(stock - 1);
 
-  alert("Order submitted!\nOrder ID: " + orderId);
-  location.reload();
+  document.getElementById("order").value = orderId;
+  document.getElementById("confirmation").style.display = "block";
+  document.getElementById("orderIdText").textContent =
+    "Your Order ID: " + orderId;
+
+  updateProductStock();
 }
 
-/* ========= ADMIN ========= */
-
-function loadAdmin() {
-  const stockEl = document.getElementById("currentStock");
-  if (stockEl) stockEl.textContent = "Current stock: " + getStock();
-
-  const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
-  const list = document.getElementById("orderList");
-  if (!list) return;
-
-  list.innerHTML = "";
-  orders.forEach(o => {
-    const li = document.createElement("li");
-    li.textContent = `${o.id} — ${o.discord} (${o.time})`;
-    list.appendChild(li);
-  });
-}
+document.addEventListener("DOMContentLoaded", updateProductStock);
