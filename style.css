@@ -1,101 +1,126 @@
+/* RESET */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* BODY */
 body {
-  margin: 0;
-  background: radial-gradient(circle at top, #111827, #000);
-  color: #fff;
+  background: #0b0f14;
+  color: #e6f0ff;
+  min-height: 100vh;
 }
 
 /* NAVBAR */
 .navbar {
-  background: #7cc4ff;
-  color: #000;
-  padding: 14px 24px;
+  background: #05070a;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #1a2433;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6fb9ff;
 }
 
 .navbar a {
+  color: #cfe4ff;
   margin-left: 20px;
   text-decoration: none;
-  color: #000;
-  font-weight: bold;
+  font-weight: 500;
 }
 
-/* LAYOUT */
+.navbar a:hover {
+  color: #6fb9ff;
+}
+
+/* MAIN CONTAINER */
 .container {
   max-width: 1100px;
-  margin: 50px auto;
+  margin: 40px auto;
   padding: 0 20px;
 }
 
-.product-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+/* PRODUCT PAGE */
+.product-page {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-/* CARDS */
-.card {
-  background: rgba(20, 20, 30, 0.95);
-  border-radius: 14px;
-  padding: 25px;
-  box-shadow: 0 0 25px rgba(124, 196, 255, 0.15);
+/* DETAILS */
+.details {
+  flex: 1;
+  min-width: 280px;
 }
 
-.card h1 {
-  margin-top: 0;
-}
-
-.price {
+.details h1 {
   font-size: 28px;
   margin-bottom: 15px;
 }
 
-/* INPUTS */
-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: none;
+.features {
+  list-style: none;
+  margin-bottom: 20px;
 }
 
-/* BUTTON */
-button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: none;
-  background: #7cc4ff;
-  color: #000;
+.features li {
+  margin-bottom: 8px;
+  color: #b7d7ff;
+}
+
+/* STOCK STATUS */
+#stockStatus {
+  margin-top: 10px;
   font-weight: bold;
-  cursor: pointer;
 }
 
-button:disabled {
-  background: #444;
-  color: #999;
-  cursor: not-allowed;
+/* BUY BOX */
+.buy-box {
+  background: #05070a;
+  border: 1px solid #1a2433;
+  border-radius: 10px;
+  padding: 25px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* PAYMENTS */
-.payments {
-  margin-top: 20px;
+.price {
+  font-size: 26px;
+  font-weight: bold;
+  color: #6fb9ff;
   text-align: center;
 }
 
+/* INPUTS */
+.buy-box input {
+  background: #0b0f14;
+  border: 1px solid #1a2433;
+  border-radius: 6px;
+  padding: 10px;
+  color: #e6f0ff;
+}
+
+.buy-box input::placeholder {
+  color: #7a9cc7;
+}
+
+/* PAYMENT BUTTONS */
 .pay-btn {
-  display: block;
-  margin: 10px 0;
+  text-align: center;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
+  transition: 0.2s;
 }
 
 .cashapp {
@@ -103,19 +128,66 @@ button:disabled {
   color: #000;
 }
 
+.cashapp:hover {
+  background: #19ff52;
+}
+
 .venmo {
   background: #3d95ce;
   color: #fff;
 }
 
-.payments small {
-  display: block;
-  margin-top: 10px;
-  opacity: 0.7;
+.venmo:hover {
+  background: #5fb6ff;
 }
 
-/* STOCK STATUS */
-#stockStatus {
-  margin-top: 15px;
+/* SUBMIT BUTTON */
+#submitBtn {
+  background: #6fb9ff;
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
   font-weight: bold;
+}
+
+#submitBtn:hover {
+  background: #8fd0ff;
+}
+
+/* DISABLED */
+#submitBtn:disabled {
+  background: #2a3648;
+  color: #7a9cc7;
+  cursor: not-allowed;
+}
+
+/* NOTE */
+.note {
+  font-size: 12px;
+  text-align: center;
+  color: #9bbcff;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 60px;
+  padding: 20px;
+  text-align: center;
+  color: #6c8fb8;
+  font-size: 13px;
+  border-top: 1px solid #1a2433;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .product-page {
+    flex-direction: column;
+  }
+
+  .buy-box {
+    width: 100%;
+  }
 }
