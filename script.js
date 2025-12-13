@@ -1,102 +1,92 @@
-// ===== STOCK SYSTEM =====
-function getStock() {
-  return localStorage.getItem("stock") !== "out";
-}
-
-function toggleStock() {
-  const current = getStock();
-  localStorage.setItem("stock", current ? "out" : "in");
+// ---------- STOCK ----------
+function setStock(state) {
+  localStorage.setItem("tb3_stock", state ? "in" : "out");
   updateStockUI();
 }
 
+function getStock() {
+  return localStorage.getItem("tb3_stock") || "out";
+}
+
 function updateStockUI() {
-  const status = document.getElementById("stockStatus");
-  const btn = document.getElementById("stockBtn");
+  const stock = getStock();
 
-  if (!status || !btn) return;
+  const stockText = document.getElementById("stockStatus");
+  const adminStock = document.getElementById("adminStockStatus");
+  const btn = document.getElementById("submitBtn");
 
-  if (getStock()) {
-    status.innerText = "Status: IN STOCK";
-    btn.innerText = "Set Out of Stock";
-  } else {
-    status.innerText = "Status: OUT OF STOCK";
-    btn.innerText = "Set In Stock";
+  if (stockText) {
+    stockText.innerText =
+      stock === "in" ? "Status: IN STOCK" : "Status: OUT OF STOCK";
+  }
+
+  if (adminStock) {
+    adminStock.innerText =
+      stock === "in" ? "Current: IN STOCK" : "Current: OUT OF STOCK";
+  }
+
+  if (btn) {
+    btn.disabled = stock !== "in";
+    btn.innerText = stock === "in" ? "Submit Order" : "Out of Stock";
   }
 }
 
-updateStockUI();
-
-// ===== ORDER SYSTEM =====
-const ordersDiv = document.getElementById("orders");
-
-function addOrder(order) {
-  const div = document.createElement("div");
-  div.className = "product-card";
-
-  div.innerHTML = `
-    <p><strong>Order ID:</strong> ${order.id}</p>
-    <p><strong>Discord:</strong> ${order.discord}</p>
-    <p><strong>Status:</strong> <span class="status">Pending</span></p>
-
-    <textarea placeholder="Admin notes"></textarea>
-
-    <button onclick="markPaid(this)">Mark Paid</button>
-    <button onclick="markDelivered(this)">Delivered</button>
-  `;
-
-  ordersDiv.prepend(div);
+// ---------- ORDER ID ----------
+function generateOrderId() {
+  return "TB3-" + Math.floor(10000 + Math.random() * 90000);
 }
 
-function markPaid(btn) {
-  btn.parentElement.querySelector(".status").innerText = "Paid";
-}
-
-function markDelivered(btn) {
-  btn.parentElement.querySelector(".status").innerText = "Delivered";
-}
-
-// ===== AUTO ORDER FROM PRODUCT PAGE =====
+// ---------- SUBMIT ORDER ----------
 function submitOrder() {
-  if (!getStock()) {
-    alert("Out of stock");
-    return;
-  }
-
   const discord = document.getElementById("discord").value.trim();
+  const orderId = document.getElementById("orderId").value;
+
   if (!discord) {
-    alert("Enter Discord");
+    alert("Enter your Discord username or ID");
     return;
   }
 
-  const orderId = "TB3-" + Math.floor(10000 + Math.random() * 90000);
+  const orders = JSON.parse(localStorage.getItem("tb3_orders") || "[]");
 
-  const order = {
-    id: orderId,
-    discord: discord
-  };
+  orders.push({
+    orderId,
+    discord,
+    time: new Date().toLocaleString()
+  });
 
-  // Save locally for admin
-  const saved = JSON.parse(localStorage.getItem("orders") || "[]");
-  saved.unshift(order);
-  localStorage.setItem("orders", JSON.stringify(saved));
+  localStorage.setItem("tb3_orders", JSON.stringify(orders));
 
-  // Send webhook
-  fetch("YOUR_DISCORD_WEBHOOK_HERE", {
+  fetch("YOUR_DISCORD_WEBHOOK_URL", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content:
-        `🧾 **NEW ORDER**\n🆔 ${orderId}\n👤 ${discord}\n💰 $8`
+        "🧾 **NEW ORDER**\n\n" +
+        "📦 Product: Stacked TB3 Account\n" +
+        "🆔 Order ID: " + orderId + "\n" +
+        "👤 Discord: " + discord
     })
   });
 
-  alert("Order submitted! Order ID: " + orderId);
+  alert("Order submitted! Check Discord.");
   document.getElementById("discord").value = "";
+  document.getElementById("orderId").value = generateOrderId();
 }
 
-// Load orders on admin page
-(function loadOrders() {
-  if (!ordersDiv) return;
-  const saved = JSON.parse(localStorage.getItem("orders") || "[]");
-  saved.forEach(addOrder);
-})();
+// ---------- LOAD ----------
+document.addEventListener("DOMContentLoaded", () => {
+  updateStockUI();
+
+  const orderInput = document.getElementById("orderId");
+  if (orderInput) {
+    orderInput.value = generateOrderId();
+  }
+
+  const ordersDiv = document.getElementById("orders");
+  if (ordersDiv) {
+    const orders = JSON.parse(localStorage.getItem("tb3_orders") || "[]");
+    ordersDiv.innerHTML = orders
+      .map(o => `<p><b>${o.orderId}</b> - ${o.discord} (${o.time})</p>`)
+      .join("");
+  }
+});
