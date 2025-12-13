@@ -12,7 +12,7 @@
   <nav>
     <a href="index.html">Products</a>
     <a href="#">FAQ</a>
-    <a href="https://discord.gg/YOURSERVER" target="_blank">Discord</a>
+    <a href="admin.html">Admin</a>
   </nav>
 </header>
 
@@ -30,19 +30,29 @@
         <li>Filled Backpack</li>
         <li>Filled Car Trunk</li>
       </ul>
+
+      <p id="stockStatus"></p>
     </div>
 
     <div class="buy-box">
-  <p class="price">$8.00</p>
+      <p class="price">$8.00</p>
 
-  <input
-    type="text"
-    id="discord"
-    placeholder="Discord username or ID"
-  />
+      <input
+        type="text"
+        id="discord"
+        placeholder="Discord username or ID"
+      />
 
-  <button onclick="submitOrder()">Submit Order</button>
-</div>
+      <input
+        type="text"
+        id="orderId"
+        readonly
+      />
+
+      <button id="submitBtn" onclick="submitOrder()">
+        Submit Order
+      </button>
+    </div>
 
   </div>
 </main>
@@ -50,3 +60,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+
