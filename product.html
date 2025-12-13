@@ -16,55 +16,73 @@
   </nav>
 </header>
 
-<main class="container product-layout">
+<main class="container">
+  <div class="product-page">
 
-  <!-- PRODUCT INFO -->
-  <div class="card">
-    <h1>Stacked TB3 Account</h1>
-    <ul>
-      <li>Clean Account</li>
-      <li>Max Clean Money</li>
-      <li>Max Dirty Money</li>
-      <li>Max Bank</li>
-      <li>Filled Safe</li>
-      <li>Filled Backpack</li>
-      <li>Filled Car Trunk</li>
-    </ul>
+    <!-- PRODUCT DETAILS -->
+    <div class="details">
+      <h1>Stacked TB3 Account</h1>
+      <ul class="features">
+        <li>✔ Clean Account</li>
+        <li>✔ Max Clean Money</li>
+        <li>✔ Max Dirty Money</li>
+        <li>✔ Max Bank</li>
+        <li>✔ Filled Safe</li>
+        <li>✔ Filled Backpack</li>
+        <li>✔ Filled Car Trunk</li>
+      </ul>
 
-    <p id="stockStatus"></p>
-  </div>
+      <p id="stockStatus"></p>
+    </div>
 
-  <!-- ORDER + PAYMENT -->
-  <div class="card">
-    <h2 class="price">$8.00</h2>
+    <!-- BUY BOX -->
+    <div class="buy-box">
+      <p class="price">$8.00</p>
 
-    <input id="discord" type="text" placeholder="Discord username or ID" />
-    <input id="order" type="text" readonly />
+      <input
+        id="discord"
+        type="text"
+        placeholder="Discord username or ID"
+      />
 
-    <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
+      <input
+        id="order"
+        type="text"
+        readonly
+      />
 
-    <div class="payments">
-      <h3>Payment Methods</h3>
-
-      <a class="pay-btn cashapp" 
-         href="https://cash.app/$lozanoyol" 
-         target="_blank">
+      <!-- PAYMENT BUTTONS -->
+      <a
+        class="pay-btn cashapp"
+        href="https://cash.app/$lozanoyol"
+        target="_blank"
+      >
         Pay with Cash App
       </a>
 
-      <a class="pay-btn venmo" 
-         href="https://venmo.com/u/juanflores23" 
-         target="_blank">
+      <a
+        class="pay-btn venmo"
+        href="https://venmo.com/u/juanflores23"
+        target="_blank"
+      >
         Pay with Venmo
       </a>
 
-      <small>
-        After payment, send your Order ID in Discord.
-      </small>
-    </div>
-  </div>
+      <button id="submitBtn" onclick="submitOrder()">
+        Submit Order
+      </button>
 
+      <p class="note">
+        After paying, submit your order and send proof in Discord.
+      </p>
+    </div>
+
+  </div>
 </main>
+
+<footer class="footer">
+  © 2025 TB3 Market
+</footer>
 
 <script src="script.js"></script>
 </body>
