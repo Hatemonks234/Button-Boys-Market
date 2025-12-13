@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TB3 Admin Panel</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -15,31 +15,17 @@
 </header>
 
 <main class="container">
-  <div class="product-card">
 
-    <h2>Order Delivery</h2>
+  <h2>Stock Control</h2>
+  <button onclick="toggleStock()" id="stockBtn">Set Out of Stock</button>
+  <p id="stockStatus"></p>
 
-    <input
-      type="text"
-      id="adminOrderId"
-      placeholder="Order ID (example: TB3-1042)"
-    />
+  <hr>
 
-    <input
-      type="text"
-      id="adminDiscord"
-      placeholder="Customer Discord (user#1234)"
-    />
+  <h2>Orders</h2>
 
-    <textarea
-      id="adminNotes"
-      placeholder="What you delivered (account info, notes, etc.)"
-      rows="4"
-    ></textarea>
+  <div id="orders"></div>
 
-    <button onclick="deliverOrder()">Mark as Delivered</button>
-
-  </div>
 </main>
 
 <script src="script.js"></script>
