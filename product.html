@@ -1,68 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Stacked TB3 Account</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<!-- NAVBAR -->
 <header class="navbar">
   <div class="logo">TB3 Market</div>
   <nav>
     <a href="index.html">Products</a>
-    <a href="#">FAQ</a>
     <a href="https://discord.gg/B4DhgMHaFq" target="_blank">Discord</a>
   </nav>
 </header>
 
-<main class="container">
+<!-- MAIN -->
+<main class="container fade-in">
   <div class="product-page">
 
-    <div class="details fade-in">
+    <!-- PRODUCT DETAILS -->
+    <div class="details">
       <h1>Stacked TB3 Account</h1>
 
       <ul class="features">
-        <li>Clean Account</li>
-        <li>Max Clean Money</li>
-        <li>Max Dirty Money</li>
-        <li>Max Bank</li>
-        <li>Filled Safe</li>
-        <li>Filled Backpack</li>
-        <li>Filled Car Trunk</li>
+        <li>✔ Clean Account</li>
+        <li>✔ Max Clean Money</li>
+        <li>✔ Max Dirty Money</li>
+        <li>✔ Max Bank</li>
+        <li>✔ Filled Safe</li>
+        <li>✔ Filled Backpack</li>
+        <li>✔ Filled Car Trunk</li>
       </ul>
 
       <p id="stockStatus"></p>
     </div>
 
-    <div class="buy-box fade-in">
+    <!-- BUY BOX -->
+    <div class="buy-box">
       <p class="price">$8.00</p>
 
-      <input id="discord" placeholder="Discord username or ID">
-      <input id="order" readonly placeholder="Order ID">
+      <!-- DISCORD INPUT -->
+      <input
+        type="text"
+        id="discord"
+        placeholder="Your Discord username or ID"
+      />
 
-      <a class="pay-btn cashapp" href="https://cash.app/$lozanoyol" target="_blank">
+      <!-- AUTO ORDER ID -->
+      <input
+        type="text"
+        id="order"
+        placeholder="Order ID (auto-generated)"
+        readonly
+      />
+
+      <!-- PAYMENT METHODS -->
+      <a
+        class="pay-btn cashapp"
+        href="https://cash.app/$lozanoyol"
+        target="_blank"
+      >
         Pay with Cash App
       </a>
 
-      <a class="pay-btn venmo" href="https://venmo.com/u/juanflores23" target="_blank">
+      <a
+        class="pay-btn venmo"
+        href="https://venmo.com/u/juanflores23"
+        target="_blank"
+      >
         Pay with Venmo
       </a>
 
-      <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
+      <!-- SUBMIT -->
+      <button id="submitBtn" onclick="submitOrder()">
+        Submit Order
+      </button>
 
       <p class="note">
-        After payment, send your Order ID in Discord.
+        After payment, your order is sent to admin for delivery.
       </p>
     </div>
 
   </div>
 </main>
 
+<!-- ORDER CONFIRMATION MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h2>Order Submitted</h2>
+    <p>Your Order ID:</p>
+    <strong id="modalOrder"></strong>
+    <p style="margin-top:10px;">
+      Please send payment proof in Discord.
+    </p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer class="footer">
-  © 2025 TB3 Market
+  © 2025 TB3 Market · All sales final
 </footer>
 
+<!-- SCRIPT -->
 <script src="script.js"></script>
 </body>
 </html>
