@@ -25,9 +25,12 @@
       <h1>Stacked TB3 Account</h1>
       <ul>
         <li>Clean Account</li>
-        <li>Max Money</li>
+        <li>Max Clean Money</li>
+        <li>Max Dirty Money</li>
         <li>Max Bank</li>
-        <li>Instant Delivery</li>
+        <li>Filled Safe</li>
+        <li>Filled Backpack</li>
+        <li>Filled Car Trunk</li>
       </ul>
     </div>
 
@@ -35,19 +38,26 @@
     <div class="buy-box">
       <p class="price">$8.00</p>
 
-      <!-- DISCORD INPUT -->
+      <!-- DISCORD -->
       <input
         type="text"
         id="discord"
         placeholder="Discord username or ID (example: user#1234)"
       />
 
-      <!-- AUTO ORDER ID -->
+      <!-- ORDER ID -->
       <input
         type="text"
         id="order"
         readonly
       />
+
+      <!-- EXTRA INFO -->
+      <textarea
+        id="notes"
+        placeholder="Extra info (optional: preferences, reminders, etc.)"
+        rows="4"
+      ></textarea>
 
       <a class="pay-btn" href="https://cash.app/$lozanoyol" target="_blank">
         Pay with Cash App
@@ -66,3 +76,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+
