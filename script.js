@@ -1,139 +1,70 @@
-/**********************
-  GLOBAL STORAGE KEYS
-**********************/
-const STOCK_KEY = "tb3_stock";
-const ORDERS_KEY = "tb3_orders";
+/* ========= STOCK ========= */
 
-/**********************
-  UTIL FUNCTIONS
-**********************/
 function getStock() {
-  return parseInt(localStorage.getItem(STOCK_KEY)) || 0;
+  return parseInt(localStorage.getItem("tb3_stock")) || 0;
 }
 
-function setStock(amount) {
-  localStorage.setItem(STOCK_KEY, amount);
+function setStock(val) {
+  localStorage.setItem("tb3_stock", val);
 }
 
-function getOrders() {
-  return JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
-}
-
-function saveOrders(orders) {
-  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-}
+/* ========= ORDER ID ========= */
 
 function generateOrderId() {
-  return "TB3-" + Math.floor(10000 + Math.random() * 90000);
+  return "TB3-" + Math.floor(100000 + Math.random() * 900000);
 }
 
-/**********************
-  PRODUCT PAGE LOGIC
-**********************/
-function loadProductPage() {
-  const stock = getStock();
-  const statusEl = document.getElementById("stockStatus");
-  const submitBtn = document.getElementById("submitOrder");
-
-  if (!statusEl || !submitBtn) return;
-
-  if (stock > 0) {
-    statusEl.textContent = "IN STOCK";
-    submitBtn.disabled = false;
-  } else {
-    statusEl.textContent = "OUT OF STOCK";
-    submitBtn.disabled = true;
-  }
-}
+/* ========= SUBMIT ORDER ========= */
 
 function submitOrder() {
-  const discordInput = document.getElementById("discordInput");
-  if (!discordInput.value.trim()) {
-    alert("Enter your Discord username or ID");
-    return;
-  }
-
-  if (getStock() <= 0) {
+  const stock = getStock();
+  if (stock <= 0) {
     alert("Out of stock");
     return;
   }
 
-  const order = {
-    id: generateOrderId(),
+  const discordInput = document.getElementById("discord");
+  if (!discordInput || discordInput.value.trim() === "") {
+    alert("Enter your Discord username or ID");
+    return;
+  }
+
+  const orderId = generateOrderId();
+
+  // show ID in box
+  const orderBox = document.getElementById("order");
+  if (orderBox) orderBox.value = orderId;
+
+  const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
+
+  orders.push({
+    id: orderId,
     discord: discordInput.value.trim(),
     time: new Date().toLocaleString()
-  };
+  });
 
-  const orders = getOrders();
-  orders.push(order);
-  saveOrders(orders);
+  localStorage.setItem("tb3_orders", JSON.stringify(orders));
 
-  setStock(getStock() - 1);
+  setStock(stock - 1);
 
-  alert("Order placed!\nOrder ID: " + order.id);
-  discordInput.value = "";
-
-  loadProductPage();
+  alert("Order submitted!\nOrder ID: " + orderId);
+  location.reload();
 }
 
-/**********************
-  ADMIN PAGE LOGIC
-**********************/
-function loadAdminPage() {
+/* ========= ADMIN ========= */
+
+function loadAdmin() {
   const stockEl = document.getElementById("currentStock");
-  const ordersEl = document.getElementById("ordersList");
+  if (stockEl) stockEl.textContent = "Current stock: " + getStock();
 
-  if (!stockEl || !ordersEl) return;
+  const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
+  const list = document.getElementById("orderList");
+  if (!list) return;
 
-  stockEl.textContent = getStock();
-
-  const orders = getOrders();
-  ordersEl.innerHTML = "";
-
-  if (orders.length === 0) {
-    ordersEl.innerHTML = "<p>No orders yet.</p>";
-    return;
-  }
-
-  orders.forEach((order, index) => {
-    const div = document.createElement("div");
-    div.className = "order-item";
-    div.innerHTML = `
-      <strong>${order.id}</strong><br>
-      Discord: ${order.discord}<br>
-      Time: ${order.time}<br>
-      <button onclick="completeOrder(${index})">Complete Order</button>
-      <hr>
-    `;
-    ordersEl.appendChild(div);
+  list.innerHTML = "";
+  orders.forEach(o => {
+    const li = document.createElement("li");
+    li.textContent = `${o.id} — ${o.discord} (${o.time})`;
+    list.appendChild(li);
   });
 }
-
-function updateStock() {
-  const input = document.getElementById("stockInput");
-  const value = parseInt(input.value);
-
-  if (isNaN(value) || value < 0) {
-    alert("Enter a valid stock number");
-    return;
-  }
-
-  setStock(value);
-  input.value = "";
-  loadAdminPage();
-}
-
-function completeOrder(index) {
-  const orders = getOrders();
-  orders.splice(index, 1);
-  saveOrders(orders);
-  loadAdminPage();
-}
-
-/**********************
-  AUTO INIT
-**********************/
-document.addEventListener("DOMContentLoaded", () => {
-  loadProductPage();
-  loadAdminPage();
-});
