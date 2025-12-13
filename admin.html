@@ -1,38 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TB3 Admin Panel</title>
-  <link rel="stylesheet" href="style.css" />
-  <script>
-    const PASSWORD = "HiPanda77"; // 🔴 CHANGE THIS
-
-    const userPass = prompt("Enter admin password:");
-    if (userPass !== PASSWORD) {
-      alert("Access denied");
-      window.location.href = "index.html";
-    }
-  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="navbar">
-  <div class="logo">TB3 Admin</div>
-  <nav>
-    <a href="index.html">Back to Shop</a>
-  </nav>
-</header>
+<h2 style="text-align:center;">TB3 Admin Panel</h2>
 
-<main class="container">
-  <h2>Admin Panel</h2>
-  <p>This page is private. Do not share.</p>
-  <p>Orders are handled manually for now.</p>
-  <p>Future: Discord bot + auto delivery</p>
-</main>
+<div class="container" style="max-width:500px;">
 
-<footer>
-  © 2025 TB3 Market
-</footer>
+  <input id="order" placeholder="Order ID (TB3-XXXXXX)">
+  <input id="discord" placeholder="Customer Discord">
+
+  <textarea id="credentials" rows="5"
+    placeholder="Paste account info here
+Username:
+Password:
+Notes:"></textarea>
+
+  <button onclick="deliver()">Deliver Account</button>
+
+</div>
+
+<script>
+function deliver() {
+  const order = order.value.trim();
+  const discord = document.getElementById("discord").value.trim();
+  const creds = credentials.value.trim();
+
+  if (!order || !discord || !creds) {
+    alert("Fill all fields");
+    return;
+  }
+
+  fetch("https://discord.com/api/webhooks/1448939295371952169/qcxOs6b4mX4CwQTz03qWolCSgk8x7qauxbza3MVFqIVU8a32x_lzQ5t0X_d14aSzW3nL", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      content:
+        "✅ **ORDER DELIVERED**\n\n" +
+        "🆔 Order: " + order + "\n" +
+        "👤 Discord: " + discord + "\n\n" +
+        "🔐 **LOGIN INFO**\n```" + creds + "```"
+    })
+  })
+  .then(() => alert("Delivered successfully"))
+  .catch(() => alert("Error"));
+}
+</script>
 
 </body>
 </html>
