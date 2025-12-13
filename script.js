@@ -56,7 +56,7 @@ function submitOrder() {
 
   localStorage.setItem("tb3_orders", JSON.stringify(orders));
 
-  fetch("YOUR_DISCORD_WEBHOOK_URL", {
+  fetch("https://discord.com/api/webhooks/1448939295371952169/qcxOs6b4mX4CwQTz03qWolCSgk8x7qauxbza3MVFqIVU8a32x_lzQ5t0X_d14aSzW3nL", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
