@@ -1,92 +1,96 @@
-// ---------- STOCK ----------
-function setStock(state) {
-  localStorage.setItem("tb3_stock", state ? "in" : "out");
-  updateStockUI();
-}
+// ===== CONFIG =====
+const WEBHOOK_URL = "PASTE_WEBHOOK_URL_HERE";
 
-function getStock() {
-  return localStorage.getItem("tb3_stock") || "out";
-}
-
-function updateStockUI() {
-  const stock = getStock();
-
-  const stockText = document.getElementById("stockStatus");
-  const adminStock = document.getElementById("adminStockStatus");
-  const btn = document.getElementById("submitBtn");
-
-  if (stockText) {
-    stockText.innerText =
-      stock === "in" ? "Status: IN STOCK" : "Status: OUT OF STOCK";
-  }
-
-  if (adminStock) {
-    adminStock.innerText =
-      stock === "in" ? "Current: IN STOCK" : "Current: OUT OF STOCK";
-  }
-
-  if (btn) {
-    btn.disabled = stock !== "in";
-    btn.innerText = stock === "in" ? "Submit Order" : "Out of Stock";
-  }
-}
-
-// ---------- ORDER ID ----------
+// ===== UTIL =====
 function generateOrderId() {
   return "TB3-" + Math.floor(10000 + Math.random() * 90000);
 }
 
-// ---------- SUBMIT ORDER ----------
+// ===== STOCK =====
+function setStock(inStock) {
+  localStorage.setItem("tb3_stock", inStock ? "IN" : "OUT");
+  updateStockUI();
+}
+
+function getStock() {
+  return localStorage.getItem("tb3_stock") || "OUT";
+}
+
+// ===== PRODUCT PAGE =====
+function updateStockUI() {
+  const stock = getStock();
+  const status = document.getElementById("stockStatus");
+  const btn = document.getElementById("submitBtn");
+
+  if (!status || !btn) return;
+
+  if (stock === "IN") {
+    status.textContent = "Status: IN STOCK";
+    btn.disabled = false;
+  } else {
+    status.textContent = "Status: OUT OF STOCK";
+    btn.disabled = true;
+  }
+}
+
 function submitOrder() {
   const discord = document.getElementById("discord").value.trim();
   const orderId = document.getElementById("orderId").value;
 
   if (!discord) {
-    alert("Enter your Discord username or ID");
+    alert("Enter your Discord");
     return;
   }
 
-  const orders = JSON.parse(localStorage.getItem("tb3_orders") || "[]");
-
-  orders.push({
-    orderId,
-    discord,
-    time: new Date().toLocaleString()
-  });
-
-  localStorage.setItem("tb3_orders", JSON.stringify(orders));
-
-  fetch("https://discord.com/api/webhooks/1448939295371952169/qcxOs6b4mX4CwQTz03qWolCSgk8x7qauxbza3MVFqIVU8a32x_lzQ5t0X_d14aSzW3nL", {
+  fetch(WEBHOOK_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content:
-        "🧾 **NEW ORDER**\n\n" +
-        "📦 Product: Stacked TB3 Account\n" +
+        "🧾 **NEW ORDER**\n" +
+        "📦 Stacked TB3 Account ($8)\n" +
         "🆔 Order ID: " + orderId + "\n" +
         "👤 Discord: " + discord
     })
   });
 
-  alert("Order submitted! Check Discord.");
+  const orders = JSON.parse(localStorage.getItem("tb3_orders") || "[]");
+  orders.push(orderId + " - " + discord + " (" + new Date().toLocaleString() + ")");
+  localStorage.setItem("tb3_orders", JSON.stringify(orders));
+
+  alert("Order submitted!");
   document.getElementById("discord").value = "";
   document.getElementById("orderId").value = generateOrderId();
 }
 
-// ---------- LOAD ----------
-document.addEventListener("DOMContentLoaded", () => {
+// ===== ADMIN PAGE =====
+function loadAdmin() {
   updateStockUI();
 
-  const orderInput = document.getElementById("orderId");
-  if (orderInput) {
-    orderInput.value = generateOrderId();
+  const current = document.getElementById("currentStock");
+  if (current) {
+    current.textContent = "Current: " + (getStock() === "IN" ? "IN STOCK" : "OUT OF STOCK");
   }
 
   const ordersDiv = document.getElementById("orders");
   if (ordersDiv) {
     const orders = JSON.parse(localStorage.getItem("tb3_orders") || "[]");
-    ordersDiv.innerHTML = orders
-      .map(o => `<p><b>${o.orderId}</b> - ${o.discord} (${o.time})</p>`)
-      .join("");
+    ordersDiv.innerHTML = orders.map(o => `<p>${o}</p>`).join("");
   }
+}
+
+function clearOrders() {
+  if (confirm("End all orders?")) {
+    localStorage.removeItem("tb3_orders");
+    loadAdmin();
+  }
+}
+
+// ===== INIT =====
+document.addEventListener("DOMContentLoaded", () => {
+  const orderInput = document.getElementById("orderId");
+  if (orderInput) orderInput.value = generateOrderId();
+
+  updateStockUI();
+  loadAdmin();
 });
