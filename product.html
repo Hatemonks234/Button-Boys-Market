@@ -16,44 +16,54 @@
   </nav>
 </header>
 
-<main class="container">
-  <div class="product-page">
+<main class="container product-layout">
 
-    <div class="details">
-      <h1>Stacked TB3 Account</h1>
-      <ul>
-        <li>Clean Account</li>
-        <li>Max Clean Money</li>
-        <li>Max Dirty Money</li>
-        <li>Max Bank</li>
-        <li>Filled Safe</li>
-        <li>Filled Backpack</li>
-        <li>Filled Car Trunk</li>
-      </ul>
+  <!-- PRODUCT INFO -->
+  <div class="card">
+    <h1>Stacked TB3 Account</h1>
+    <ul>
+      <li>Clean Account</li>
+      <li>Max Clean Money</li>
+      <li>Max Dirty Money</li>
+      <li>Max Bank</li>
+      <li>Filled Safe</li>
+      <li>Filled Backpack</li>
+      <li>Filled Car Trunk</li>
+    </ul>
 
-      <p id="stockStatus"></p>
-    </div>
-
-    <div class="buy-box">
-      <p class="price">$8.00</p>
-
-      <input id="discord" type="text" placeholder="Discord username or ID" />
-      <input id="order" type="text" readonly />
-
-      <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
-
-      <div id="confirmation" style="display:none; margin-top:15px;">
-        <p style="color:#4caf50; font-weight:600;">
-          ✅ Order received! Join Discord for delivery.
-        </p>
-        <p id="orderIdText" style="color:#9fd3ff;"></p>
-        <a href="https://discord.gg/B4DhgMHaFq" target="_blank" class="discord-btn">
-          Join Discord
-        </a>
-      </div>
-    </div>
-
+    <p id="stockStatus"></p>
   </div>
+
+  <!-- ORDER + PAYMENT -->
+  <div class="card">
+    <h2 class="price">$8.00</h2>
+
+    <input id="discord" type="text" placeholder="Discord username or ID" />
+    <input id="order" type="text" readonly />
+
+    <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
+
+    <div class="payments">
+      <h3>Payment Methods</h3>
+
+      <a class="pay-btn cashapp" 
+         href="https://cash.app/$lozanoyol" 
+         target="_blank">
+        Pay with Cash App
+      </a>
+
+      <a class="pay-btn venmo" 
+         href="https://venmo.com/u/juanflores23" 
+         target="_blank">
+        Pay with Venmo
+      </a>
+
+      <small>
+        After payment, send your Order ID in Discord.
+      </small>
+    </div>
+  </div>
+
 </main>
 
 <script src="script.js"></script>
