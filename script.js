@@ -1,4 +1,4 @@
-// AUTO GENERATE ORDER ID
+// AUTO-GENERATE ORDER ID WHEN PAGE LOADS
 window.onload = () => {
   const orderInput = document.getElementById("order");
   if (orderInput) {
@@ -8,12 +8,12 @@ window.onload = () => {
 };
 
 function submitOrder() {
-  const discord = document.getElementById("discord").value.trim();
-  const order = document.getElementById("order").value.trim();
-  const note = document.getElementById("note").value.trim();
+  const discord = document.getElementById("discord")?.value.trim();
+  const order = document.getElementById("order")?.value.trim();
+  const note = document.getElementById("note")?.value.trim() || "None";
 
-  if (!discord) {
-    alert("Please enter your Discord username");
+  if (!discord || !order) {
+    alert("Please enter your Discord username.");
     return;
   }
 
@@ -24,20 +24,21 @@ function submitOrder() {
     },
     body: JSON.stringify({
       content:
-        "🧾 **NEW TB3 ORDER**\n\n" +
+        "🧾 **NEW ORDER RECEIVED**\n\n" +
         "📦 **Product:** Stacked TB3 Account ($8)\n" +
         "🆔 **Order ID:** " + order + "\n" +
         "👤 **Discord:** " + discord + "\n" +
-        (note ? "📝 **Note:** " + note + "\n" : "") +
-        "\n💰 **Status:** Awaiting payment proof"
+        "📝 **Note:** " + note + "\n\n" +
+        "💰 **Status:** Payment sent (manual verification)"
     })
   })
   .then(() => {
-    alert("Order submitted! Please pay and send proof on Discord.");
+    alert("✅ Order submitted! Check Discord for updates.");
     document.getElementById("discord").value = "";
     document.getElementById("note").value = "";
   })
   .catch(() => {
-    alert("Something went wrong. Try again.");
+    alert("❌ Error sending order. Try again.");
   });
 }
+
