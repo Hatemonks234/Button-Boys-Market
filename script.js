@@ -1,19 +1,10 @@
-// AUTO-GENERATE ORDER ID WHEN PAGE LOADS
-window.onload = () => {
-  const orderInput = document.getElementById("order");
-  if (orderInput) {
-    const id = "TB3-" + Math.floor(100000 + Math.random() * 900000);
-    orderInput.value = id;
-  }
-};
+function deliverOrder() {
+  const orderId = document.getElementById("adminOrderId").value.trim();
+  const discord = document.getElementById("adminDiscord").value.trim();
+  const notes = document.getElementById("adminNotes").value.trim();
 
-function submitOrder() {
-  const discord = document.getElementById("discord")?.value.trim();
-  const order = document.getElementById("order")?.value.trim();
-  const note = document.getElementById("note")?.value.trim() || "None";
-
-  if (!discord || !order) {
-    alert("Please enter your Discord username.");
+  if (!orderId || !discord) {
+    alert("Order ID and Discord are required");
     return;
   }
 
@@ -24,21 +15,22 @@ function submitOrder() {
     },
     body: JSON.stringify({
       content:
-        "🧾 **NEW ORDER RECEIVED**\n\n" +
-        "📦 **Product:** Stacked TB3 Account ($8)\n" +
-        "🆔 **Order ID:** " + order + "\n" +
-        "👤 **Discord:** " + discord + "\n" +
-        "📝 **Note:** " + note + "\n\n" +
-        "💰 **Status:** Payment sent (manual verification)"
+        "✅ **ORDER DELIVERED**\n\n" +
+        "🆔 **Order ID:** " + orderId + "\n" +
+        "👤 **Discord:** " + discord + "\n\n" +
+        "📦 **Delivery Notes:**\n" +
+        (notes || "No notes provided")
     })
   })
   .then(() => {
-    alert("✅ Order submitted! Check Discord for updates.");
-    document.getElementById("discord").value = "";
-    document.getElementById("note").value = "";
+    alert("Order marked as delivered!");
+    document.getElementById("adminOrderId").value = "";
+    document.getElementById("adminDiscord").value = "";
+    document.getElementById("adminNotes").value = "";
   })
   .catch(() => {
-    alert("❌ Error sending order. Try again.");
+    alert("Failed to send delivery message");
   });
 }
+
 
