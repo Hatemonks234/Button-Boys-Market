@@ -1,45 +1,102 @@
-function generateOrderId() {
-  return "TB3-" + Math.floor(10000 + Math.random() * 90000);
+// ===== STOCK SYSTEM =====
+function getStock() {
+  return localStorage.getItem("stock") !== "out";
 }
 
-window.onload = function () {
-  const orderInput = document.getElementById("order");
-  if (orderInput) {
-    orderInput.value = generateOrderId();
-  }
+function toggleStock() {
+  const current = getStock();
+  localStorage.setItem("stock", current ? "out" : "in");
+  updateStockUI();
+}
 
-  const btn = document.getElementById("submitBtn");
-  if (btn) {
-    btn.addEventListener("click", submitOrder);
-  }
-};
+function updateStockUI() {
+  const status = document.getElementById("stockStatus");
+  const btn = document.getElementById("stockBtn");
 
+  if (!status || !btn) return;
+
+  if (getStock()) {
+    status.innerText = "Status: IN STOCK";
+    btn.innerText = "Set Out of Stock";
+  } else {
+    status.innerText = "Status: OUT OF STOCK";
+    btn.innerText = "Set In Stock";
+  }
+}
+
+updateStockUI();
+
+// ===== ORDER SYSTEM =====
+const ordersDiv = document.getElementById("orders");
+
+function addOrder(order) {
+  const div = document.createElement("div");
+  div.className = "product-card";
+
+  div.innerHTML = `
+    <p><strong>Order ID:</strong> ${order.id}</p>
+    <p><strong>Discord:</strong> ${order.discord}</p>
+    <p><strong>Status:</strong> <span class="status">Pending</span></p>
+
+    <textarea placeholder="Admin notes"></textarea>
+
+    <button onclick="markPaid(this)">Mark Paid</button>
+    <button onclick="markDelivered(this)">Delivered</button>
+  `;
+
+  ordersDiv.prepend(div);
+}
+
+function markPaid(btn) {
+  btn.parentElement.querySelector(".status").innerText = "Paid";
+}
+
+function markDelivered(btn) {
+  btn.parentElement.querySelector(".status").innerText = "Delivered";
+}
+
+// ===== AUTO ORDER FROM PRODUCT PAGE =====
 function submitOrder() {
-  const discord = document.getElementById("discord").value.trim();
-  const order = document.getElementById("order").value;
-
-  if (!discord) {
-    alert("Enter your Discord");
+  if (!getStock()) {
+    alert("Out of stock");
     return;
   }
 
-  fetch("https://discord.com/api/webhooks/1448939295371952169/qcxOs6b4mX4CwQTz03qWolCSgk8x7qauxbza3MVFqIVU8a32x_lzQ5t0X_d14aSzW3nL", {
+  const discord = document.getElementById("discord").value.trim();
+  if (!discord) {
+    alert("Enter Discord");
+    return;
+  }
+
+  const orderId = "TB3-" + Math.floor(10000 + Math.random() * 90000);
+
+  const order = {
+    id: orderId,
+    discord: discord
+  };
+
+  // Save locally for admin
+  const saved = JSON.parse(localStorage.getItem("orders") || "[]");
+  saved.unshift(order);
+  localStorage.setItem("orders", JSON.stringify(saved));
+
+  // Send webhook
+  fetch("YOUR_DISCORD_WEBHOOK_HERE", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content:
-        "🧾 **NEW ORDER**\n\n" +
-        "📦 Product: Stacked TB3 Account ($8)\n" +
-        "🆔 Order ID: " + order + "\n" +
-        "👤 Discord: " + discord
+        `🧾 **NEW ORDER**\n🆔 ${orderId}\n👤 ${discord}\n💰 $8`
     })
-  })
-  .then(() => {
-    alert("Order sent! Complete payment.");
-    document.getElementById("discord").value = "";
-    document.getElementById("order").value = generateOrderId();
-  })
-  .catch(() => {
-    alert("Webhook failed.");
   });
+
+  alert("Order submitted! Order ID: " + orderId);
+  document.getElementById("discord").value = "";
 }
+
+// Load orders on admin page
+(function loadOrders() {
+  if (!ordersDiv) return;
+  const saved = JSON.parse(localStorage.getItem("orders") || "[]");
+  saved.forEach(addOrder);
+})();
