@@ -1,108 +1,96 @@
-/* =========================
-   STOCK FUNCTIONS
-========================= */
+// ====== STORAGE KEYS ======
+const STOCK_KEY = "tb3_stock";
+const ORDERS_KEY = "tb3_orders";
 
+// ====== STOCK ======
 function getStock() {
-  return parseInt(localStorage.getItem("tb3_stock")) || 0;
+  return parseInt(localStorage.getItem(STOCK_KEY)) || 0;
 }
 
-function setStock(value) {
-  localStorage.setItem("tb3_stock", value);
+function setStock(amount) {
+  localStorage.setItem(STOCK_KEY, amount);
+  updateStockDisplay();
 }
 
-/* =========================
-   ORDER FUNCTIONS
-========================= */
-
-function generateOrderId() {
-  return "TB3-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+// ====== ORDERS ======
+function getOrders() {
+  return JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
 }
 
-function submitOrder() {
-  const discord = document.getElementById("discord").value.trim();
-  const stock = getStock();
+function saveOrders(orders) {
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+}
 
-  if (!discord) {
-    alert("Please enter your Discord username or ID.");
-    return;
-  }
+// ====== PLACE ORDER (PRODUCT PAGE) ======
+function submitOrder(username, payment) {
+  let stock = getStock();
+  if (stock <= 0) return alert("Out of stock");
 
-  if (stock <= 0) {
-    alert("Out of stock.");
-    return;
-  }
-
-  const orderId = generateOrderId();
-  document.getElementById("order").value = orderId;
-
-  const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
+  const orders = getOrders();
   orders.push({
-    id: orderId,
-    discord: discord,
+    id: Date.now(),
+    user: username,
+    payment: payment,
     time: new Date().toLocaleString()
   });
 
-  localStorage.setItem("tb3_orders", JSON.stringify(orders));
-
+  saveOrders(orders);
   setStock(stock - 1);
-  updateStockDisplay();
 
-  alert(
-    "Order created!\n\nOrder ID: " +
-    orderId +
-    "\n\nComplete payment and send this ID in Discord."
-  );
+  alert("Order placed! Send your Order ID in Discord.");
 }
 
-/* =========================
-   PRODUCT PAGE DISPLAY
-========================= */
-
-function updateStockDisplay() {
-  const stock = getStock();
-  const status = document.getElementById("stockStatus");
-  const button = document.getElementById("submitBtn");
-
-  if (!status || !button) return;
-
-  if (stock > 0) {
-    status.innerHTML = "✔ In Stock: " + stock;
-    status.style.color = "#19ff52";
-    button.disabled = false;
-  } else {
-    status.innerHTML = "✖ Out of Stock";
-    status.style.color = "#ff5c5c";
-    button.disabled = true;
-  }
-}
-
-/* =========================
-   ADMIN PAGE
-========================= */
-
+// ====== ADMIN LOAD ======
 function loadAdmin() {
-  const stockText = document.getElementById("currentStock");
-  const list = document.getElementById("orderList");
+  document.getElementById("currentStock").innerText =
+    "Current Stock: " + getStock();
 
-  if (!stockText || !list) return;
+  const orderList = document.getElementById("orderList");
+  orderList.innerHTML = "";
 
-  stockText.textContent = "Current stock: " + getStock();
-  list.innerHTML = "";
+  const orders = getOrders();
 
-  const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
+  if (orders.length === 0) {
+    orderList.innerHTML = "<li>No orders yet.</li>";
+    return;
+  }
 
-  orders.forEach(o => {
+  orders.forEach((order, index) => {
     const li = document.createElement("li");
-    li.textContent = `${o.id} — ${o.discord} (${o.time})`;
-    list.appendChild(li);
+    li.style.marginBottom = "10px";
+
+    li.innerHTML = `
+      <strong>${order.user}</strong><br>
+      Payment: ${order.payment}<br>
+      Time: ${order.time}<br>
+      <button onclick="clearOrder(${index})">Clear Order</button>
+    `;
+
+    orderList.appendChild(li);
   });
 }
 
-/* =========================
-   INIT
-========================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-  updateStockDisplay();
+// ====== CLEAR SINGLE ORDER ======
+function clearOrder(index) {
+  const orders = getOrders();
+  orders.splice(index, 1);
+  saveOrders(orders);
   loadAdmin();
-});
+}
+
+// ====== PRODUCT PAGE STOCK DISPLAY ======
+function updateStockDisplay() {
+  const el = document.getElementById("stockStatus");
+  if (!el) return;
+
+  const stock = getStock();
+  if (stock > 0) {
+    el.innerHTML = "✅ In Stock (" + stock + ")";
+    el.style.color = "#6fff9f";
+  } else {
+    el.innerHTML = "❌ Out of Stock";
+    el.style.color = "#ff6f6f";
+  }
+}
+
+updateStockDisplay();
