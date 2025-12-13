@@ -23,10 +23,10 @@
     <div class="details">
       <h1>Stacked TB3 Account</h1>
       <ul>
-        <li>✔ Clean Account</li>
-        <li>✔ Max Money</li>
-        <li>✔ Max Bank</li>
-        <li>✔ Instant Delivery</li>
+        <li>Clean Account</li>
+        <li>Max Money</li>
+        <li>Max Bank</li>
+        <li>Instant Delivery</li>
       </ul>
     </div>
 
@@ -34,28 +34,20 @@
     <div class="buy-box">
       <p class="price">$8.00</p>
 
-      <!-- DISCORD -->
+      <!-- DISCORD INPUT -->
       <input
         type="text"
         id="discord"
-        placeholder="Discord username (example: user#1234)"
+        placeholder="Discord username or ID"
       />
 
-      <!-- ORDER ID -->
+      <!-- AUTO ORDER ID -->
       <input
         type="text"
         id="order"
         readonly
       />
 
-      <!-- OPTIONAL NOTE -->
-      <textarea
-        id="note"
-        placeholder="Extra note (optional)"
-        rows="3"
-      ></textarea>
-
-      <!-- PAYMENT -->
       <a class="pay-btn" href="https://cash.app/$lozanoyol" target="_blank">
         Pay with Cash App
       </a>
@@ -64,30 +56,12 @@
         Pay with Venmo
       </a>
 
-      <!-- VERIFY CHECKBOX -->
-      <label style="display:block;margin:12px 0;">
-        <input type="checkbox" id="confirmPay" />
-        I have sent payment
-      </label>
-
-      <button onclick="handleSubmit()">Submit Order</button>
+      <button onclick="submitOrder()">Submit Order</button>
     </div>
 
   </div>
 </main>
 
 <script src="script.js"></script>
-
-<script>
-function handleSubmit() {
-  const check = document.getElementById("confirmPay");
-  if (!check.checked) {
-    alert("Please confirm you sent payment.");
-    return;
-  }
-  submitOrder();
-}
-</script>
-
 </body>
 </html>
