@@ -1,9 +1,7 @@
-// Generate random order ID
 function generateOrderId() {
   return "TB3-" + Math.floor(1000 + Math.random() * 9000);
 }
 
-// Set order ID on page load
 window.onload = function () {
   document.getElementById("order").value = generateOrderId();
 };
@@ -11,6 +9,7 @@ window.onload = function () {
 function submitOrder() {
   const discord = document.getElementById("discord").value.trim();
   const order = document.getElementById("order").value.trim();
+  const notes = document.getElementById("notes").value.trim();
   const btn = document.getElementById("submitBtn");
 
   if (!discord) {
@@ -31,19 +30,21 @@ function submitOrder() {
         "🧾 **NEW ORDER RECEIVED**\n\n" +
         "📦 Product: Stacked TB3 Account ($8)\n" +
         "🆔 Order ID: " + order + "\n" +
-        "👤 Discord: " + discord + "\n\n" +
+        "👤 Discord: " + discord + "\n" +
+        "📝 Extra Info: " + (notes || "None") + "\n\n" +
         "💰 Status: Awaiting payment verification"
     })
   })
   .then(() => {
-    alert("Order sent! Please complete payment and wait for delivery.");
+    alert("Order sent! Complete payment and wait for delivery.");
     document.getElementById("discord").value = "";
+    document.getElementById("notes").value = "";
     document.getElementById("order").value = generateOrderId();
     btn.disabled = false;
     btn.innerText = "Submit Order";
   })
   .catch(() => {
-    alert("Error sending order. Try again.");
+    alert("Error submitting order. Try again.");
     btn.disabled = false;
     btn.innerText = "Submit Order";
   });
