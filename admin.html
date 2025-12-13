@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TB3 Admin</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<script>
+  const pass = prompt("Admin password:");
+  if (pass !== "TB3ADMIN") {
+    alert("Access denied");
+    window.location.href = "index.html";
+  }
+</script>
 
 <header class="navbar">
   <div class="logo">TB3 Admin</div>
@@ -17,19 +25,43 @@
 <main class="container">
   <h2>Stock Control</h2>
 
-  <button onclick="setStock(true)">Set IN STOCK</button>
-  <button onclick="setStock(false)">Set OUT OF STOCK</button>
+  <input id="stockInput" type="number" min="0" placeholder="Enter stock amount" />
+  <button onclick="updateStock()">Update Stock</button>
 
   <p id="currentStock"></p>
 
-  <hr>
+  <hr />
 
   <h2>Orders</h2>
-  <div id="orders"></div>
-
-  <button onclick="clearOrders()">End Orders (Clear)</button>
+  <ul id="orderList"></ul>
 </main>
 
 <script src="script.js"></script>
+<script>
+  function updateStock() {
+    const val = parseInt(document.getElementById("stockInput").value);
+    if (isNaN(val) || val < 0) return alert("Invalid stock");
+    setStock(val);
+    loadAdmin();
+  }
+
+  function loadAdmin() {
+    document.getElementById("currentStock").textContent =
+      "Current stock: " + getStock();
+
+    const orders = JSON.parse(localStorage.getItem("tb3_orders")) || [];
+    const list = document.getElementById("orderList");
+    list.innerHTML = "";
+
+    orders.forEach(o => {
+      const li = document.createElement("li");
+      li.textContent = `${o.id} — ${o.discord} (${o.time})`;
+      list.appendChild(li);
+    });
+  }
+
+  loadAdmin();
+</script>
+
 </body>
 </html>
