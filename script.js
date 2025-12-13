@@ -1,11 +1,17 @@
-// AUTO GENERATE ORDER ID
 function generateOrderId() {
   return "TB3-" + Math.floor(10000 + Math.random() * 90000);
 }
 
-// SET ORDER ID ON PAGE LOAD
-window.onload = () => {
-  document.getElementById("order").value = generateOrderId();
+window.onload = function () {
+  const orderInput = document.getElementById("order");
+  if (orderInput) {
+    orderInput.value = generateOrderId();
+  }
+
+  const btn = document.getElementById("submitBtn");
+  if (btn) {
+    btn.addEventListener("click", submitOrder);
+  }
 };
 
 function submitOrder() {
@@ -13,7 +19,7 @@ function submitOrder() {
   const order = document.getElementById("order").value;
 
   if (!discord) {
-    alert("Please enter your Discord");
+    alert("Enter your Discord");
     return;
   }
 
@@ -22,19 +28,18 @@ function submitOrder() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content:
-        "🧾 **NEW ORDER RECEIVED**\n\n" +
-        "📦 **Product:** Stacked TB3 Account ($8)\n" +
-        "🆔 **Order ID:** " + order + "\n" +
-        "👤 **Discord:** " + discord + "\n\n" +
-        "💰 **Status:** Awaiting payment"
+        "🧾 **NEW ORDER**\n\n" +
+        "📦 Product: Stacked TB3 Account ($8)\n" +
+        "🆔 Order ID: " + order + "\n" +
+        "👤 Discord: " + discord
     })
   })
   .then(() => {
-    alert("Order submitted! Please complete payment and wait for delivery.");
+    alert("Order sent! Complete payment.");
     document.getElementById("discord").value = "";
     document.getElementById("order").value = generateOrderId();
   })
   .catch(() => {
-    alert("Error sending order. Try again.");
+    alert("Webhook failed.");
   });
 }
