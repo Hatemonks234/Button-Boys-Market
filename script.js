@@ -1,36 +1,40 @@
-function deliverOrder() {
-  const orderId = document.getElementById("adminOrderId").value.trim();
-  const discord = document.getElementById("adminDiscord").value.trim();
-  const notes = document.getElementById("adminNotes").value.trim();
+// AUTO GENERATE ORDER ID
+function generateOrderId() {
+  return "TB3-" + Math.floor(10000 + Math.random() * 90000);
+}
 
-  if (!orderId || !discord) {
-    alert("Order ID and Discord are required");
+// SET ORDER ID ON PAGE LOAD
+window.onload = () => {
+  document.getElementById("order").value = generateOrderId();
+};
+
+function submitOrder() {
+  const discord = document.getElementById("discord").value.trim();
+  const order = document.getElementById("order").value;
+
+  if (!discord) {
+    alert("Please enter your Discord");
     return;
   }
 
   fetch("https://discord.com/api/webhooks/1448939295371952169/qcxOs6b4mX4CwQTz03qWolCSgk8x7qauxbza3MVFqIVU8a32x_lzQ5t0X_d14aSzW3nL", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content:
-        "✅ **ORDER DELIVERED**\n\n" +
-        "🆔 **Order ID:** " + orderId + "\n" +
+        "🧾 **NEW ORDER RECEIVED**\n\n" +
+        "📦 **Product:** Stacked TB3 Account ($8)\n" +
+        "🆔 **Order ID:** " + order + "\n" +
         "👤 **Discord:** " + discord + "\n\n" +
-        "📦 **Delivery Notes:**\n" +
-        (notes || "No notes provided")
+        "💰 **Status:** Awaiting payment"
     })
   })
   .then(() => {
-    alert("Order marked as delivered!");
-    document.getElementById("adminOrderId").value = "";
-    document.getElementById("adminDiscord").value = "";
-    document.getElementById("adminNotes").value = "";
+    alert("Order submitted! Please complete payment and wait for delivery.");
+    document.getElementById("discord").value = "";
+    document.getElementById("order").value = generateOrderId();
   })
   .catch(() => {
-    alert("Failed to send delivery message");
+    alert("Error sending order. Try again.");
   });
 }
-
-
