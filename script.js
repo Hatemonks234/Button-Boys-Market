@@ -12,14 +12,15 @@ function submitOrder() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      content:
-        "🧾 **NEW ORDER RECEIVED**\n\n" +
-        "**Product:** Stacked TB3 Account ($8)\n" +
-        "**Order ID:** " + order + "\n" +
-        "**Discord:** " + discord + "\n\n" +
-        "💰 Awaiting payment verification"
-    })
+   body: JSON.stringify({
+  content:
+    "🧾 **NEW ORDER RECEIVED**\n\n" +
+    "📦 **Product:** Stacked TB3 Account ($8)\n" +
+    "🆔 **Order ID:** " + order + "\n" +
+    "👤 **Discord ID:** " + discord + "\n\n" +
+    "💰 **Status:** Awaiting payment verification"
+})
+    
   })
   .then(() => {
     alert("Order submitted! Please send proof in Discord.");
