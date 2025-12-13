@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TB3 Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>TB3 Admin</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -20,10 +20,14 @@
   <button onclick="setStock(true)">Set IN STOCK</button>
   <button onclick="setStock(false)">Set OUT OF STOCK</button>
 
-  <p id="adminStockStatus"></p>
+  <p id="currentStock"></p>
+
+  <hr>
 
   <h2>Orders</h2>
   <div id="orders"></div>
+
+  <button onclick="clearOrders()">End Orders (Clear)</button>
 </main>
 
 <script src="script.js"></script>
