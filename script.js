@@ -69,3 +69,7 @@ function removeOrder(index) {
 }
 
 renderOrders();
+
+function getStock() {
+  return parseInt(localStorage.getItem("stock")) || 0;
+}
