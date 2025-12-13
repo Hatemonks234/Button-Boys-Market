@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TB3 Market</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -18,22 +18,20 @@
 
 <main class="container">
 
-  <h1 class="page-title">Available Products</h1>
-
   <div class="product-grid">
 
     <!-- PRODUCT CARD -->
     <div class="product-card">
-      <h2>Stacked TB3 Account</h2>
-      <p class="price">$8.00</p>
-      <p class="stock in">In Stock</p>
-      <a href="product.html" class="btn">View Product</a>
+      <h3>Stacked TB3 Account</h3>
+      <p class="card-price">$8.00</p>
+      <p id="cardStock"></p>
+      <a href="product.html" class="view-btn">View Product</a>
     </div>
 
     <!-- PLACEHOLDER FOR FUTURE PRODUCTS -->
     <div class="product-card placeholder">
-      <h2>Coming Soon</h2>
-      <p>More products will be added</p>
+      <h3>Coming Soon</h3>
+      <p>More products soon</p>
     </div>
 
   </div>
@@ -44,5 +42,9 @@
   © 2025 TB3 Market
 </footer>
 
+<script src="script.js"></script>
+<script>
+  updateCardStock();
+</script>
 </body>
 </html>
