@@ -37,10 +37,16 @@
     <div class="buy-box">
       <p class="price">$8.00</p>
 
-      <input id="discord" type="text" placeholder="Discord username or ID" />
-      <input id="order" type="text" readonly />
+      <!-- ONLY input the JS needs -->
+      <input
+        type="text"
+        id="discordInput"
+        placeholder="Discord username or ID"
+      />
 
-      <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
+      <button id="submitOrder" onclick="submitOrder()">
+        Submit Order
+      </button>
     </div>
 
   </div>
