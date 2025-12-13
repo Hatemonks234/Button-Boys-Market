@@ -19,6 +19,7 @@
 <main class="container">
   <div class="product-page">
 
+    <!-- PRODUCT DETAILS -->
     <div class="details">
       <h1>Stacked TB3 Account</h1>
       <ul>
@@ -34,17 +35,23 @@
       <p id="stockStatus"></p>
     </div>
 
+    <!-- BUY BOX -->
     <div class="buy-box">
       <p class="price">$8.00</p>
 
-      <!-- ONLY input the JS needs -->
       <input
+        id="discord"
         type="text"
-        id="discordInput"
         placeholder="Discord username or ID"
       />
 
-      <button id="submitOrder" onclick="submitOrder()">
+      <input
+        id="order"
+        type="text"
+        readonly
+      />
+
+      <button id="submitBtn" onclick="submitOrder()">
         Submit Order
       </button>
     </div>
@@ -53,5 +60,30 @@
 </main>
 
 <script src="script.js"></script>
+
+<script>
+  function updateStockUI() {
+    const stock = getStock();
+    const status = document.getElementById("stockStatus");
+    const btn = document.getElementById("submitBtn");
+
+    if (stock <= 0) {
+      status.textContent = "❌ OUT OF STOCK";
+      status.style.color = "red";
+      btn.disabled = true;
+      btn.style.opacity = "0.5";
+      btn.style.cursor = "not-allowed";
+    } else {
+      status.textContent = "✅ In Stock: " + stock;
+      status.style.color = "green";
+      btn.disabled = false;
+      btn.style.opacity = "1";
+      btn.style.cursor = "pointer";
+    }
+  }
+
+  updateStockUI();
+</script>
+
 </body>
 </html>
