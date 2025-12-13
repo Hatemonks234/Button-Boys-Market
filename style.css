@@ -1,12 +1,17 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f14;
+  background: radial-gradient(circle at top, #111827, #000);
   color: #fff;
 }
 
+/* NAVBAR */
 .navbar {
-  background: #8ecaff;
+  background: #7cc4ff;
   color: #000;
   padding: 14px 24px;
   display: flex;
@@ -15,65 +20,102 @@ body {
 }
 
 .navbar a {
-  margin-left: 15px;
-  color: #000;
+  margin-left: 20px;
   text-decoration: none;
-  font-weight: 600;
+  color: #000;
+  font-weight: bold;
 }
 
+/* LAYOUT */
 .container {
-  padding: 40px;
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 0 20px;
 }
 
-.product-page {
-  display: flex;
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 30px;
 }
 
-.details,
-.buy-box {
-  background: #111820;
+/* CARDS */
+.card {
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 14px;
   padding: 25px;
-  border-radius: 10px;
-  width: 50%;
+  box-shadow: 0 0 25px rgba(124, 196, 255, 0.15);
+}
+
+.card h1 {
+  margin-top: 0;
 }
 
 .price {
-  font-size: 22px;
+  font-size: 28px;
   margin-bottom: 15px;
 }
 
+/* INPUTS */
 input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
 }
 
+/* BUTTON */
 button {
   width: 100%;
-  padding: 12px;
-  background: #5aaeff;
-  color: #000;
-  font-weight: 600;
+  padding: 14px;
+  border-radius: 10px;
   border: none;
-  border-radius: 6px;
+  background: #7cc4ff;
+  color: #000;
+  font-weight: bold;
   cursor: pointer;
 }
 
 button:disabled {
   background: #444;
+  color: #999;
   cursor: not-allowed;
 }
 
-.discord-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 16px;
-  background: #5865F2;
-  color: white;
-  border-radius: 6px;
+/* PAYMENTS */
+.payments {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pay-btn {
+  display: block;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 10px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: bold;
+}
+
+.cashapp {
+  background: #00d632;
+  color: #000;
+}
+
+.venmo {
+  background: #3d95ce;
+  color: #fff;
+}
+
+.payments small {
+  display: block;
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+/* STOCK STATUS */
+#stockStatus {
+  margin-top: 15px;
+  font-weight: bold;
 }
