@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Stacked TB3 Account</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -17,12 +17,12 @@
 </header>
 
 <main class="container">
-  <div class="product-grid">
+  <div class="product-page">
 
-    <!-- PRODUCT DETAILS -->
-    <div class="product-card">
+    <div class="details fade-in">
       <h1>Stacked TB3 Account</h1>
-      <ul>
+
+      <ul class="features">
         <li>Clean Account</li>
         <li>Max Clean Money</li>
         <li>Max Dirty Money</li>
@@ -32,49 +32,27 @@
         <li>Filled Car Trunk</li>
       </ul>
 
-      <p id="stockStatus" class="stock-status"></p>
+      <p id="stockStatus"></p>
     </div>
 
-    <!-- CHECKOUT -->
-    <div class="checkout-card">
-      <div class="price">$8.00</div>
+    <div class="buy-box fade-in">
+      <p class="price">$8.00</p>
 
-      <input
-        id="discord"
-        type="text"
-        placeholder="Discord username or ID"
-      />
+      <input id="discord" placeholder="Discord username or ID">
+      <input id="order" readonly placeholder="Order ID">
 
-      <input
-        id="order"
-        type="text"
-        readonly
-      />
+      <a class="pay-btn cashapp" href="https://cash.app/$lozanoyol" target="_blank">
+        Pay with Cash App
+      </a>
 
-      <button id="submitBtn" onclick="submitOrder()">
-        Submit Order
-      </button>
+      <a class="pay-btn venmo" href="https://venmo.com/u/juanflores23" target="_blank">
+        Pay with Venmo
+      </a>
 
-      <div class="payments">
-        <a
-          class="cashapp"
-          href="https://cash.app/$lozanoyol"
-          target="_blank"
-        >
-          Pay with Cash App
-        </a>
-
-        <a
-          class="venmo"
-          href="https://venmo.com/u/juanflores23"
-          target="_blank"
-        >
-          Pay with Venmo
-        </a>
-      </div>
+      <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
 
       <p class="note">
-        After payment, send your <strong>Order ID</strong> in Discord.
+        After payment, send your Order ID in Discord.
       </p>
     </div>
 
