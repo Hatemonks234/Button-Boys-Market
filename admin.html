@@ -1,45 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TB3 Admin</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>TB3 Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<script>
-  const pass = prompt("Admin password:");
-  if (pass !== "HiPanda77") {
-    alert("Access denied");
-    window.location.href = "index.html";
-  }
-</script>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">TB3 Admin Panel</div>
+    <div class="nav-links">
+      <a href="index.html">Back to Shop</a>
+    </div>
+  </div>
 
-<header class="navbar">
-  <div class="logo">TB3 Admin Panel</div>
-  <nav>
-    <a href="product.html">Back to Shop</a>
-  </nav>
-</header>
+  <!-- CONTENT -->
+  <div class="container">
 
-<main class="container">
-  <h2>Stock Control</h2>
+    <!-- STOCK CONTROL -->
+    <div class="admin-box">
+      <h2>Stock Control</h2>
 
-  <input id="stockInput" type="number" min="0" placeholder="Set stock amount">
-  <button onclick="setStock(parseInt(stockInput.value))">Update Stock</button>
+      <input
+        type="number"
+        id="stockInput"
+        placeholder="Set stock amount"
+        min="0"
+      />
 
-  <p id="currentStock"></p>
+      <button onclick="updateStock()">Update Stock</button>
 
-  <hr>
+      <p style="margin-top: 12px;">
+        Current Stock:
+        <strong id="currentStock">0</strong>
+      </p>
+    </div>
 
-  <h2>Orders</h2>
-  <ul id="orderList" class="order-list"></ul>
-</main>
+    <!-- ORDERS -->
+    <div class="admin-box">
+      <h2>Orders</h2>
 
-<script src="script.js"></script>
-<script>
-  loadAdmin();
-</script>
+      <ul id="ordersList" class="orders">
+        <li>No orders yet</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 TB3 Market
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Load stock on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      const stock = localStorage.getItem("tb3_stock") || 0;
+      document.getElementById("currentStock").innerText = stock;
+    });
+
+    // Update stock
+    function updateStock() {
+      const input = document.getElementById("stockInput");
+      const value = parseInt(input.value);
+
+      if (isNaN(value) || value < 0) {
+        alert("Enter a valid stock number");
+        return;
+      }
+
+      localStorage.setItem("tb3_stock", value);
+      document.getElementById("currentStock").innerText = value;
+      input.value = "";
+    }
+  </script>
 
 </body>
 </html>
