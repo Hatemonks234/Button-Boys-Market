@@ -1,187 +1,113 @@
-/* =========================
-   GLOBAL RESET
-========================= */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-  background: radial-gradient(circle at top, #0e141b, #070b10);
-  color: #e6edf3;
-  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(circle at top, #0d1b2a, #000814);
+  color: #fff;
 }
 
-/* =========================
-   NAVBAR
-========================= */
-.navbar {
+/* NAVBAR */
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 40px;
-  background: linear-gradient(180deg, #0c1117, #070b10);
-  border-bottom: 1px solid rgba(0, 170, 255, 0.15);
+  background: linear-gradient(180deg, #000814, #020b16);
+  border-bottom: 1px solid #0a2a4a;
 }
 
-.logo {
+nav h1 {
+  color: #4cc9f0;
   font-size: 22px;
-  font-weight: 700;
-  color: #6ecbff;
 }
 
-.nav-links a {
-  margin-left: 25px;
+nav a {
+  color: #cbd5e1;
   text-decoration: none;
-  color: #cfd8e3;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  margin-left: 20px;
 }
 
-.nav-links a:hover {
-  color: #6ecbff;
+nav a:hover {
+  color: #4cc9f0;
 }
 
-/* =========================
-   PAGE CONTAINER
-========================= */
+/* PAGE */
 .container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 60px auto;
   padding: 0 20px;
 }
 
-/* =========================
-   HEADINGS
-========================= */
-h1 {
-  font-size: 34px;
-  margin-bottom: 30px;
-}
-
 h2 {
-  font-size: 22px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
-/* =========================
-   PRODUCT GRID
-========================= */
+/* PRODUCTS GRID */
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
+  gap: 30px;
 }
 
-/* =========================
-   CARDS
-========================= */
 .card {
-  background: linear-gradient(180deg, #0f151d, #0a0f15);
+  background: linear-gradient(180deg, #020b16, #000814);
+  border: 1px solid #0a2a4a;
   border-radius: 14px;
   padding: 25px;
-  border: 1px solid rgba(0, 170, 255, 0.18);
-  box-shadow: 0 0 0 rgba(0,0,0,0);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(0, 170, 255, 0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(76,201,240,0.15);
 }
 
 .card h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
+  margin-top: 0;
 }
 
 .price {
-  color: #6ecbff;
-  font-weight: 700;
+  color: #4cc9f0;
+  font-weight: bold;
   float: right;
 }
 
 .stock {
-  color: #5dff9a;
-  font-size: 14px;
-  margin-bottom: 15px;
+  color: #22c55e;
+  margin: 10px 0;
 }
 
-/* =========================
-   BUTTONS
-========================= */
-button,
+/* BUTTONS */
 .btn {
-  background: linear-gradient(180deg, #6ecbff, #3aa8ff);
-  border: none;
-  color: #071018;
+  display: inline-block;
+  background: linear-gradient(135deg, #4cc9f0, #4895ef);
+  color: #000;
   padding: 10px 18px;
   border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-button:hover,
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(110, 203, 255, 0.4);
+  opacity: 0.9;
 }
 
-/* =========================
-   ADMIN PANEL
-========================= */
-.admin-box {
-  background: linear-gradient(180deg, #0f151d, #0a0f15);
-  border-radius: 14px;
-  padding: 25px;
-  border: 1px solid rgba(0, 170, 255, 0.18);
-  margin-bottom: 30px;
+/* PRODUCT PAGE */
+.features li {
+  margin-bottom: 6px;
 }
 
-.admin-box h2 {
-  margin-bottom: 15px;
+.out {
+  color: #ef4444;
 }
 
-/* Inputs */
-input,
-select {
-  background: #0b1118;
-  border: 1px solid rgba(0, 170, 255, 0.25);
-  color: #e6edf3;
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-right: 10px;
-  outline: none;
-}
-
-input:focus,
-select:focus {
-  border-color: #6ecbff;
-}
-
-/* =========================
-   ORDERS LIST
-========================= */
-.orders {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-.orders li {
-  margin-bottom: 8px;
-  color: #cfd8e3;
-}
-
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 footer {
   text-align: center;
-  margin: 80px 0 20px;
-  color: #7f8a99;
+  opacity: 0.5;
+  margin: 60px 0 20px;
   font-size: 13px;
-  opacity: 0.7;
 }
